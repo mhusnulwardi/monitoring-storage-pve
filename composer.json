@@ -1,0 +1,6 @@
+{
+    "require": {
+        "zzantares/proxmoxve": "~4.0",
+        "twbs/bootstrap": "5.0.0-alpha1"
+    }
+}
