@@ -1,6 +1,5 @@
 <?php
-
-require_once 'config.php';
+session_start();
 
 if (isset($_POST['login'])) {
 
@@ -9,7 +8,9 @@ if (isset($_POST['login'])) {
   $password = $_POST['password'];
 
   if (!empty(trim($hostname)) && !empty(trim($username)) && !empty(trim($password))) {
-    config($hostname, $username, $password);
+    $_SESSION['hostname']=$hostname;
+    $_SESSION['username']=$username;
+    $_SESSION['password']=$password;
     header("Location:dashboard.php");
   }
 }

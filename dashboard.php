@@ -1,13 +1,31 @@
 <?php
+session_start();
+require_once 'vendor/autoload.php';
 
-require_once 'config.php';
+use ProxmoxVE\Proxmox;
 
-// $allNodes = $proxmox->get('/nodes');
-// foreach ($allNodes['data'] as $key => $data) {
-//     $cpu[] = array('CPU' => $data['cpu']);
-//     $mem[] = array('Memory' => $data['mem']);
-//     $disk[] = array('Disk' => $data['disk']);
-// }
+$credentials = [
+    'hostname'  => $_SESSION['hostname'],
+    'username'  => $_SESSION['username'],
+    'password'  => $_SESSION['password'],
+];
+
+$proxmox = new Proxmox($credentials);
+$allNodes = $proxmox->get('/nodes');
+foreach ($allNodes['data'] as $key => $data) {
+    $nodesstatus[] = array('status' => $data['status']);
+     $nodescpu[] = array('cpu' => $data['cpu']);
+     $nodesmaxcpu[] = array('maxcpu' => $data['maxcpu']);
+     $nodesmem[] = array('mem' => $data['mem']);
+     $nodesmaxmem[] = array('maxmem' => $data['maxmem']);
+     $nodesdisk[] = array('disk' => $data['disk']);
+     $nodesmaxdisk[] = array('maxdisk' => $data['maxdisk']);
+}
+
+$lxc = $proxmox->get('/nodes/pve/lxc');
+foreach ($lxc['data'] as $key => $data) {
+    $lxcvmid[] = array('vmid' => $data['vmid']);
+}
 
 ?>
 
@@ -49,11 +67,11 @@ require_once 'config.php';
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                             <div class="nav-profile-img">
-                                <img src="assets/images/faces/face1.jpg" alt="image">
+                                <img src="assets/images/faces/face4.jpg" alt="image">
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
-                                <p class="mb-1 text-black">M. Husnul Wardi</p>
+                                <p class="mb-1 text-black"> <?php echo $_SESSION['username']; ?> </p>
                             </div>
                         </a>
                         <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -79,10 +97,32 @@ require_once 'config.php';
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="storage.php">
-                            <span class="menu-title">Storage</span>
-                            <i class="mdi mdi-database menu-icon"></i>
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                            <span class="menu-title">Container</span>
+                            <i class="menu-arrow"></i>
+                            <i class="mdi mdi-cube menu-icon"></i>
                         </a>
+                        <div class="collapse" id="ui-basic">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="container.php"><?php echo $lxcvmid[0]['vmid']; ?></a></li>
+                                <li class="nav-item"> <a class="nav-link" href="container.php"><?php echo $lxcvmid[1]['vmid']; ?></a></li>
+                                <li class="nav-item"> <a class="nav-link" href="container.php"><?php echo $lxcvmid[2]['vmid']; ?></a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
+                            <span class="menu-title">Pool</span>
+                            <i class="menu-arrow"></i>
+                            <i class="mdi mdi-label menu-icon"></i>
+                        </a>
+                        <div class="collapse" id="general-pages">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="pools.php"><?php echo $poolsvmid[0]['vmid']; ?></a></li>
+                                <li class="nav-item"> <a class="nav-link" href="pools.php"><?php echo $poolsvmid[1]['vmid']; ?></a></li>
+                                <li class="nav-item"> <a class="nav-link" href="pools.php"><?php echo $poolsvmid[2]['vmid']; ?></a></li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">
@@ -115,8 +155,8 @@ require_once 'config.php';
                                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                                     <h4 class="font-weight-normal mb-3">CPU <i class="mdi mdi-desktop-tower mdi-24px float-right"></i>
                                     </h4>
-                                    <h2 class="mb-5">2%</h2>
-                                    <h6 class="card-text">of 1 CPU(s)</h6>
+                                    <h2 class="mb-5"><?php echo $nodescpu[0]['cpu']; ?> %</h2>
+                                    <h6 class="card-text">of <?php echo $nodesmaxcpu[0]['maxcpu']; ?> CPU(s)</h6>
                                 </div>
                             </div>
                         </div>
@@ -126,8 +166,8 @@ require_once 'config.php';
                                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                                     <h4 class="font-weight-normal mb-3">Memory <i class="mdi mdi-memory mdi-24px float-right"></i>
                                     </h4>
-                                    <h2 class="mb-5">42%</h2>
-                                    <h6 class="card-text">833 MiB of 1.94 GiB</h6>
+                                    <h2 class="mb-5"><?php echo $nodesmem[0]['mem']; ?></h2>
+                                    <h6 class="card-text">of <?php echo $nodesmaxmem[0]['maxmem']; ?> GiB</h6>
                                 </div>
                             </div>
                         </div>
@@ -137,8 +177,25 @@ require_once 'config.php';
                                     <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
                                     <h4 class="font-weight-normal mb-3">Storage <i class="mdi mdi-cloud mdi-24px float-right"></i>
                                     </h4>
-                                    <h2 class="mb-5">9%</h2>
-                                    <h6 class="card-text">2.66 GiB of 28.41 GiB</h6>
+                                    <h2 class="mb-5"><?php echo $nodesdisk[0]['disk']; ?></h2>
+                                    <h6 class="card-text">of <?php echo $nodesmaxdisk[0]['maxdisk']; ?> GiB</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Helth</h4>
+                                    <table class="table-responsive">
+                                        <tbody>
+                                            <tr>
+                                                <td>Status</td>
+                                                <td><label class="badge badge-primary"><?php echo $nodesstatus[0]['status']; ?></label></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -147,82 +204,10 @@ require_once 'config.php';
                         <div class="col-12 grid-margin">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Recent Tickets</h4>
+                                    <h4 class="card-title">Guests</h4>
                                     <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th> Assignee </th>
-                                                    <th> Subject </th>
-                                                    <th> Status </th>
-                                                    <th> Last Update </th>
-                                                    <th> Tracking ID </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <img src="assets/images/faces/face1.jpg" class="mr-2" alt="image"> David Grey </td>
-                                                    <td> Fund is not recieved </td>
-                                                    <td>
-                                                        <label class="badge badge-gradient-success">DONE</label>
-                                                    </td>
-                                                    <td> Dec 5, 2017 </td>
-                                                    <td> WD-12345 </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="assets/images/faces/face2.jpg" class="mr-2" alt="image"> Stella Johnson </td>
-                                                    <td> High loading time </td>
-                                                    <td>
-                                                        <label class="badge badge-gradient-warning">PROGRESS</label>
-                                                    </td>
-                                                    <td> Dec 12, 2017 </td>
-                                                    <td> WD-12346 </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="assets/images/faces/face3.jpg" class="mr-2" alt="image"> Marina Michel </td>
-                                                    <td> Website down for one week </td>
-                                                    <td>
-                                                        <label class="badge badge-gradient-info">ON HOLD</label>
-                                                    </td>
-                                                    <td> Dec 16, 2017 </td>
-                                                    <td> WD-12347 </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="assets/images/faces/face4.jpg" class="mr-2" alt="image"> John Doe </td>
-                                                    <td> Loosing control on server </td>
-                                                    <td>
-                                                        <label class="badge badge-gradient-danger">REJECTED</label>
-                                                    </td>
-                                                    <td> Dec 3, 2017 </td>
-                                                    <td> WD-12348 </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title float-left">Local</h4>
-                                    <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
-                                    <canvas id="visit-sale-chart" class="mt-4"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Local LVM</h4>
-                                    <canvas id="traffic-chart"></canvas>
-                                    <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
                                 </div>
                             </div>
                         </div>
