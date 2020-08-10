@@ -2,9 +2,12 @@
 
 require_once 'config.php';
 
-session_start();
-$_SESSION
-
+// $allNodes = $proxmox->get('/nodes');
+// foreach ($allNodes['data'] as $key => $data) {
+//     $cpu[] = array('CPU' => $data['cpu']);
+//     $mem[] = array('Memory' => $data['mem']);
+//     $disk[] = array('Disk' => $data['disk']);
+// }
 
 ?>
 
@@ -145,61 +148,61 @@ $_SESSION
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Recent Tickets</h4>
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th> Assignee </th>
-                                                        <th> Subject </th>
-                                                        <th> Status </th>
-                                                        <th> Last Update </th>
-                                                        <th> Tracking ID </th>
-                                                    </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>
-                                      <img src="assets/images/faces/face1.jpg" class="mr-2" alt="image"> David Grey </td>
-                                    <td> Fund is not recieved </td>
-                                    <td>
-                                      <label class="badge badge-gradient-success">DONE</label>
-                                    </td>
-                                    <td> Dec 5, 2017 </td>
-                                    <td> WD-12345 </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <img src="assets/images/faces/face2.jpg" class="mr-2" alt="image"> Stella Johnson </td>
-                                    <td> High loading time </td>
-                                    <td>
-                                      <label class="badge badge-gradient-warning">PROGRESS</label>
-                                    </td>
-                                    <td> Dec 12, 2017 </td>
-                                    <td> WD-12346 </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <img src="assets/images/faces/face3.jpg" class="mr-2" alt="image"> Marina Michel </td>
-                                    <td> Website down for one week </td>
-                                    <td>
-                                      <label class="badge badge-gradient-info">ON HOLD</label>
-                                    </td>
-                                    <td> Dec 16, 2017 </td>
-                                    <td> WD-12347 </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <img src="assets/images/faces/face4.jpg" class="mr-2" alt="image"> John Doe </td>
-                                    <td> Loosing control on server </td>
-                                    <td>
-                                      <label class="badge badge-gradient-danger">REJECTED</label>
-                                    </td>
-                                    <td> Dec 3, 2017 </td>
-                                    <td> WD-12348 </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th> Assignee </th>
+                                                    <th> Subject </th>
+                                                    <th> Status </th>
+                                                    <th> Last Update </th>
+                                                    <th> Tracking ID </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/faces/face1.jpg" class="mr-2" alt="image"> David Grey </td>
+                                                    <td> Fund is not recieved </td>
+                                                    <td>
+                                                        <label class="badge badge-gradient-success">DONE</label>
+                                                    </td>
+                                                    <td> Dec 5, 2017 </td>
+                                                    <td> WD-12345 </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/faces/face2.jpg" class="mr-2" alt="image"> Stella Johnson </td>
+                                                    <td> High loading time </td>
+                                                    <td>
+                                                        <label class="badge badge-gradient-warning">PROGRESS</label>
+                                                    </td>
+                                                    <td> Dec 12, 2017 </td>
+                                                    <td> WD-12346 </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/faces/face3.jpg" class="mr-2" alt="image"> Marina Michel </td>
+                                                    <td> Website down for one week </td>
+                                                    <td>
+                                                        <label class="badge badge-gradient-info">ON HOLD</label>
+                                                    </td>
+                                                    <td> Dec 16, 2017 </td>
+                                                    <td> WD-12347 </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img src="assets/images/faces/face4.jpg" class="mr-2" alt="image"> John Doe </td>
+                                                    <td> Loosing control on server </td>
+                                                    <td>
+                                                        <label class="badge badge-gradient-danger">REJECTED</label>
+                                                    </td>
+                                                    <td> Dec 3, 2017 </td>
+                                                    <td> WD-12348 </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -224,40 +227,38 @@ $_SESSION
                             </div>
                         </div>
                     </div>
-                <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
-                <footer class="footer">
-                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2020 <a target="_blank">M. Husnul Wardi</a>. All rights reserved.</span>
-                    </div>
-                </footer>
-                <!-- partial -->
+                    <!-- content-wrapper ends -->
+                    <!-- partial:partials/_footer.html -->
+                    <footer class="footer">
+                        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2020 <a target="_blank">M. Husnul Wardi</a>. All rights reserved.</span>
+                        </div>
+                    </footer>
+                    <!-- partial -->
+                </div>
+                <!-- main-panel ends -->
             </div>
-            <!-- main-panel ends -->
+            <!-- page-body-wrapper ends -->
         </div>
-        <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="assets/js/chart.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/hoverable-collapse.js"></script>
-    <script src="assets/js/misc.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="assets/js/dashboard.js"></script>
-    <script src="assets/js/todolist.js"></script>
-    <script type="text/javascript">
-        
-
-        // api2/json/nodes/{node}/storage/{storage}/rrddata
-    </script>
-    <!-- End custom js for this page -->
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page -->
+        <script src="assets/js/chart.js"></script>
+        <!-- End plugin js for this page -->
+        <!-- inject:js -->
+        <script src="assets/js/off-canvas.js"></script>
+        <script src="assets/js/hoverable-collapse.js"></script>
+        <script src="assets/js/misc.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page -->
+        <script src="assets/js/dashboard.js"></script>
+        <script src="assets/js/todolist.js"></script>
+        <script type="text/javascript">
+            // api2/json/nodes/{node}/storage/{storage}/rrddata
+        </script>
+        <!-- End custom js for this page -->
 </body>
 
 </html>

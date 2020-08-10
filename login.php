@@ -10,7 +10,7 @@ if (isset($_POST['login'])) {
 
   if (!empty(trim($hostname)) && !empty(trim($username)) && !empty(trim($password))) {
     config($hostname, $username, $password);
-    header("Location:test.php");
+    header("Location:dashboard.php");
   }
 }
 
